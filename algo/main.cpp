@@ -1,8 +1,8 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <vector>
 #include <algorithm>
 
-// Фнукция, минимум который нужно найти
+// Р¤РЅСѓРєС†РёСЏ, РјРёРЅРёРјСѓРј РєРѕС‚РѕСЂС‹Р№ РЅСѓР¶РЅРѕ РЅР°Р№С‚Рё
 double fun(double x) {
 	return (-1 * x * x * x + 3 * (1 + x) * (std::log1p(x) - 1));
 }
@@ -14,16 +14,16 @@ int main() {
 	using namespace std;
 	setlocale(LC_ALL, "Russian");
 
-	//	&fun - указатель на функцию
-	cout << "Метод дихотомии" << endl;
+	//	&fun - СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С„СѓРЅРєС†РёСЋ
+	cout << "РњРµС‚РѕРґ РґРёС…РѕС‚РѕРјРёРё" << endl;
 	 dichotomy(&fun, -0.5, 0.5, 1e-7, 1e-6);
-	//	Результат:
+	//	Р РµР·СѓР»СЊС‚Р°С‚:
 	//  f(2.38419e-07) = -3
 	//  Iteration: 21
 
-	cout << "Метод золотого сечения" << endl;
+	cout << "РњРµС‚РѕРґ Р·РѕР»РѕС‚РѕРіРѕ СЃРµС‡РµРЅРёСЏ" << endl;
 	goldenSectionSearch(&fun, -0.5, 0.5, 1e-6);
-	// Результат:
+	// Р РµР·СѓР»СЊС‚Р°С‚:
 	// f(1.66094e-07) = -3
 	// Iteration: 29
 	return 0;
