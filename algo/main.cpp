@@ -9,22 +9,28 @@ double fun(double x) {
 
 void dichotomy(double (*fun)(double), double a, double b, double del, double eps);
 void goldenSectionSearch(double (*fun)(double), double a, double b, double eps);
+void polylines(double (*fun)(double), double a, double b, double eps);
 
 int main() {
 	using namespace std;
 	setlocale(LC_ALL, "Russian");
 
 	//	&fun - указатель на функцию
-	cout << "Метод дихотомии" << endl;
-	 dichotomy(&fun, -0.5, 0.5, 1e-7, 1e-6);
+	//cout << "Метод дихотомии" << endl;
+	//dichotomy(&fun, -0.5, 0.5, 1e-7, 1e-6);
 	//	Результат:
 	//  f(2.38419e-07) = -3
 	//  Iteration: 21
-
-	cout << "Метод золотого сечения" << endl;
-	goldenSectionSearch(&fun, -0.5, 0.5, 1e-6);
+	//cout << "Метод золотого сечения" << endl;
+	//goldenSectionSearch(&fun, -0.5, 0.5, 1e-6);
 	// Результат:
 	// f(1.66094e-07) = -3
 	// Iteration: 29
+	cout << "Метод ломаных" << endl;
+	polylines(&fun, -0.5, 0.5, 1e-6);
+	// Результат:
+	// f(0) = -3
+	// Iteration: 39
+	
 	return 0;
 }

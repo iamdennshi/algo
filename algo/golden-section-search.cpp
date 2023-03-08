@@ -8,7 +8,7 @@ void goldenSectionSearch(double (*fun)(double), double a, double b, double eps) 
     double xk2 = a + (b - a) / gr;
 
     while (fabs(b - a) > eps) {
-        if ((*fun)(xk1) < (*fun)(xk2)) {
+        if (fun(xk1) < fun(xk2)) {
             b = xk2;
         } 
         else {
@@ -21,6 +21,6 @@ void goldenSectionSearch(double (*fun)(double), double a, double b, double eps) 
     }
 
     double x = (a + b) / 2;
-     cout << "f(" << x << ") = " << (*fun)(x) << endl;
+     cout << "f(" << x << ") = " << fun(x) << endl;
      cout << "Iteration: " << count << endl << endl;
 }
