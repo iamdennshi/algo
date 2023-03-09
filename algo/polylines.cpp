@@ -4,7 +4,7 @@
 
 const int m = 100;
 
-void polylines(double (*fun)(double), double a, double b, double eps) {
+void polylines(double (*fun)(double), double (*fun1)(double), double a, double b, double eps) {
 	using namespace std;
 
 	array<double, m> xm;
@@ -17,11 +17,20 @@ void polylines(double (*fun)(double), double a, double b, double eps) {
 	}
 	//cout << '\n';
 
+	array<double, m> lxm;
+
+	for (int i = 0; i < m; i++) {
+		lxm[i] = fun1(xm[i]);
+	}
+
+	cout << *max_element(lxm.begin(), lxm.end()) << endl;
+
 	double Lm[m - 1];
 	for (int i = 0; i < m - 1; i++) {
-		Lm[i] = fabs(fun(xm[i + 1]) - fun(xm[i])) / fabs(xm[i + 1] - xm[i]);
+		Lm[i] = fabs(fun(xm[i]) - fun(xm[i + 1])) / fabs(xm[i] - xm[i + 1]);
 	}
 	const double L = *max_element(Lm, Lm + m - 1);
+	cout << L << endl;
 
 	auto g = [=](double x, double x0) -> double {
 		return fun(x0) - L * fabs(x - x0);
