@@ -29,8 +29,10 @@ void polylines(double (*fun)(double), double (*fun1)(double), double a, double b
 	for (int i = 0; i < m - 1; i++) {
 		Lm[i] = fabs(fun(xm[i]) - fun(xm[i + 1])) / fabs(xm[i] - xm[i + 1]);
 	}
-	const double L = *max_element(Lm, Lm + m - 1);
+	double L = *max_element(Lm, Lm + m - 1);
 	cout << L << endl;
+
+	L = 0.5;
 
 	auto g = [=](double x, double x0) -> double {
 		return fun(x0) - L * fabs(x - x0);

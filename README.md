@@ -5,6 +5,7 @@
 ### Методы нулевого порядка
 * Метод деления отрезка пополам (дихотомии) - [`dichotomy.cpp`](./algo/dichotomy.cpp)
 * Метод золотого сечения - [`golden-section-search.cpp`](./algo/golden-section-search.cpp)
+* Метод Фибоначчи - [`fibonacci.cpp`](./algo/fibonacci.cpp)
 
 ### Методы первого порядка
 * Метод ломаных - [`polylines.cpp`](./algo/polylines.cpp)

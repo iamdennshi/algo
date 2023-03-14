@@ -2,7 +2,7 @@
 using namespace std;
 
 void dichotomy(double (*fun)(double), double a, double b, double del, double eps) {
-    int count = 0;
+    int iteration = 1;
     double xk1 = (a + b) / 2 - del;
     double xk2 = (a + b) / 2 + del;
 
@@ -16,9 +16,9 @@ void dichotomy(double (*fun)(double), double a, double b, double del, double eps
 
         xk1 = (a + b) / 2 - del;
         xk2 = (a + b) / 2 + del;
-        count++;
+        iteration++;
     }
     double x = (a + b) / 2;
     cout << "f(" << x << ") = " << fun(x) << endl;
-    cout << "Iteration: " << count << endl << endl;
+    cout << "Iteration: " << iteration << endl << endl;
 }
