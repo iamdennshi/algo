@@ -8,7 +8,6 @@ void goldenSectionSearch(double (*fun)(double), double a, double b, double eps) 
     double xk1 = b - (b - a) / t;
     double xk2 = a + (b - a) / t;
 
-
     while (fabs(b - a) > eps) {
         if (fun(xk1) < fun(xk2)) {
             b = xk2;

@@ -14,6 +14,9 @@
 * Метод Ньютона - [`newton.cpp`](./algo/newton.cpp)
 
 ## Методы нахождения минимума от двух переменных
+### Методы прямого поиска (нулевого порядка)
+* Метод Хука-Дживса - [`patternSearch.cpp`](./algo/patternSearch.cpp)
+
 ### Методы первого порядка
 * Градиентный метод с постоянным шагом - [`gradient-fixed-step.cpp`](./algo/gradient-fixed-step.cpp)
 

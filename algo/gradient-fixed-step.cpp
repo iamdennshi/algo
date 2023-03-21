@@ -1,10 +1,10 @@
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 
 void gradientFixedStep(double (*fun)(double, double), double (*fun1x0)(double, double), double (*fun1x1)(double, double),
 	pair<double, double> x0, double eps) {
 	unsigned iteration = 1;
-	double a = 0.1;
+	double a = 0.5;	// шаг сходимости
 	auto prev_xk = x0;
 	auto xk = make_pair(
 		(prev_xk.first - fun1x0(prev_xk.first, prev_xk.second) * a),
@@ -19,7 +19,7 @@ void gradientFixedStep(double (*fun)(double, double), double (*fun1x0)(double, d
 		);
 
 		if (fun(xk.first, xk.second) > fun(prev_xk.first, prev_xk.second)) {
-			a *= 0.5;
+			a *= 0.5; 
 		}
 		++iteration;
 	}

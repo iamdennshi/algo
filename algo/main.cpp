@@ -26,14 +26,18 @@ void newton(double (*fun)(double), double (*fun1)(double), double (*fun2)(double
 #pragma region Функция от двух переменных
 // Фнукция, минимум который нужно найти
 double fun(double x0, double x1) {
+	//return x0 * x0 + std::pow(1.61, x1 * x1 + x0 * x0) + 4 * x0 + 3 * x1;
 	return x0 * x0 + 3 * x1 * x1 + std::cos(x0 + x1);
 }
 // Первая производная по x0
 double fun1x0(double x0, double x1) {
+	//return 2 * x0 + 2 * x0 * std::pow(1.61, x0 * x0 + x1 * x1) + 4;
 	return 2 * x0 - sin(x0 + x1);
 }
 // Первая производная по x1
+
 double fun1x1(double x0, double x1) {
+	//return 2 * x0 * std::pow(1.61, x1 * x1 + x0 * x0) + 2 * x1 + 3;
 	return 6 * x1 - sin(x0 + x1);
 }
 #pragma endregion
@@ -41,6 +45,8 @@ double fun1x1(double x0, double x1) {
 #pragma region Методы нахождения минимума от двух переменых
 void gradientFixedStep(double (*fun)(double, double), double (*fun1x0)(double, double), double (*fun1x1)(double, double), 
 	std::pair<double, double> x0, double eps);
+
+void patternSearch(double (*fun)(double, double), std::pair<double, double> x0, double eps);
 #pragma endregion
 
 
@@ -62,13 +68,13 @@ int main() {
 	// Iteration: 30
 	//
 	//cout << "Метод Фибоначи" << endl;
-	fibonacci(&fun, -0.5, 0.5, 15);
+	//fibonacci(&fun, -0.5, 0.5, 15);
 	// Результат:
 	// f(1.66094e-07) = -3
 	// Iteration: 30
 	//
 	//cout << "Метод ломаных" << endl;
-	//polylines(&fun, &fun1, 0.1, 2, 1e-6);
+	//polylines(&fun, &fun1, -0.5, 0.5, 1e-6);
 	// Результат:
 	// f(0) = -3
 	// Iteration: 39
@@ -85,6 +91,11 @@ int main() {
 	//gradientFixedStep(&fun, &fun1x0, &fun1x1, make_pair(1, 1), 1e-6);
 	// f(0.00373264, 0.000881153) = 1.00001
 	// Iteration: 68
+
+	//cout << "Метод Хука-Дживса" << endl;
+	//patternSearch(&fun, make_pair(1, 1), 1e-6);
+	// f(0, 0) = 1
+	// Iteration: 21
 	#pragma endregion
 	return 0;
 }

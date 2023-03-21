@@ -20,5 +20,5 @@ void dichotomy(double (*fun)(double), double a, double b, double del, double eps
     }
     double x = (a + b) / 2;
     cout << "f(" << x << ") = " << fun(x) << endl;
-    cout << "Iteration: " << iteration << endl << endl;
+    cout << "Iteration: " << iteration << endl;
 }
