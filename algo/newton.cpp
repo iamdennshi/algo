@@ -1,18 +1,18 @@
 #include <iostream>
+using namespace std;
 
-void newton(double (*fun)(double), double (*fun1)(double), double (*fun2)(double), double a, double b, double eps) {
-	using namespace std;
+void newton(double (*f)(double), double (*dfx)(double), double (*df_x)(double), double a, double b, double eps) {
 
-	int iteration = 1;
+	int iter = 1;
 	double x0 = a;
-	double xn = x0 - fun1(x0) / fun2(x0);
+	double xn = x0 - dfx(x0) / df_x(x0);
 
 	while (fabs(xn - x0) >= eps) {
 		x0 = xn;
-		xn = x0 - fun1(x0) / fun2(x0);
-		iteration++;
+		xn = x0 - dfx(x0) / df_x(x0);
+		iter++;
 	}
 
-	cout << "f(" << xn << ") = " << fun(xn) << endl;
-	cout << "Iteration: " << iteration << endl;
+	cout << "f(" << xn << ") = " << f(xn) << endl;
+	cout << "Iteration: " << iter << endl;
 }

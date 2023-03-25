@@ -1,71 +1,55 @@
 ﻿#include <iostream>
 #include <algorithm>
 #include <array>
+using namespace std;
 
-const int m = 100;
+const int m = 100; // Кол-во точек на которых разобъется отрезок [a,b]
 
-void polylines(double (*fun)(double), double (*fun1)(double), double a, double b, double eps) {
-	using namespace std;
-
-	array<double, m> xm;
-	//cout << "xm: ";
+void polylines(double (*f)(double), double (*dfx)(double), double a, double b, double eps) {
+	array<double, m> xm; // Координаты точек по x
 
 	for (int i = 0; i < xm.size(); i++) {
 		xm[i] = a + fabs(b - a) / m * i;
-		//cout << xm[i] << ' ';
-
 	}
-	//cout << '\n';
 
-	array<double, m> lxm;
-
-	// Вычисление L при помощи макс. значения производной
+	array<double, m> lxm; // Значения константы Липшица в каждой координате
+	// Вычисление константы Липшица (L) при помощи макс. значения производной
 	for (int i = 0; i < m; i++) {
-		lxm[i] = fabs(fun1(xm[i]));
+		lxm[i] = fabs(dfx(xm[i]));
 	}
 	double L = *max_element(lxm.begin(), lxm.end());
 
-	// Вычисление L числинным методом
-	//double Lm[m - 1];
-	//for (int i = 0; i < m - 1; i++) {
-	//	Lm[i] = fabs(fun(xm[i]) - fun(xm[i + 1])) / fabs(xm[i] - xm[i + 1]);
-	//}
-	//double L = *max_element(Lm, Lm + m - 1);
-
-	//cout << "L: " << L << endl;
-
+	// Функция ломаной
 	auto g = [=](double x, double x0) -> double {
-		return fun(x0) - L * fabs(x - x0);
+		return f(x0) - L * fabs(x - x0);
 	};
 
-	array<double, m> prev_p;
-	array<double, m> p;
+	array<double, m> p; // Значения общей ломаной
+	array<double, m> prev_p; // Значения общей ломаной, шагом назад
 
-	int iteration = 0;
-	double minP;
+	int iter = 0;
+	double minP; // Минимальное значение в общей ломаной
 	int minP_index;
-	double x;
+	double x; // Точка от которой будет стоится ломаная
 
 	do {
-		//cout << '\n' << "p" << iteration << ": ";
-		minP = iteration == 0 ? g(xm[0], 0) : max(p[0], g(xm[0], x));
+		minP = iter == 0 ? g(xm[0], 0) : max(p[0], g(xm[0], x));
 		minP_index = 0;
 
 		for (int i = 0; i < p.size(); i++) {
 			prev_p[i] = p[i];
-			p[i] = iteration == 0 ? g(xm[i], 0) : max(p[i], g(xm[i], x));
+			p[i] = iter == 0 ? g(xm[i], 0) : max(p[i], g(xm[i], x));
 			if (minP > p[i]) {
 				minP_index = i;
 				minP = p[i];
 			}
-			//cout << p[i] << " ";
 		}
 		x = xm[minP_index];
-		//cout << '\n' << "x" << iteration + 1 << ": " << x;
-		iteration++;
+		iter++;
 
-	} while (fabs(fun(xm[minP_index]) - prev_p[minP_index]) > eps);
-	//cout << '\n';
-	cout << "f(" << x << ") = " << fun(xm[minP_index]);
-	cout << '\n' << "Iteration: " << iteration << endl;
+	} 
+	while (fabs(f(xm[minP_index]) - prev_p[minP_index]) > eps);
+
+	cout << "f(" << x << ") = " << f(xm[minP_index]);
+	cout << '\n' << "Iteration: " << iter << endl;
 }

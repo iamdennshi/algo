@@ -1,29 +1,29 @@
 ﻿#include <iostream>
 using namespace std;
 
-void gradientFixedStep(double (*fun)(double, double), double (*fun1x0)(double, double), double (*fun1x1)(double, double),
+void gradient_fixed_step(double (*f)(double, double), double (*dfx0)(double, double), double (*dfx1)(double, double),
 	pair<double, double> x0, double eps) {
-	unsigned iteration = 1;
+	unsigned iter = 1;
 	double a = 0.5;	// шаг сходимости
 	auto prev_xk = x0;
 	auto xk = make_pair(
-		(prev_xk.first - fun1x0(prev_xk.first, prev_xk.second) * a),
-		(prev_xk.second - fun1x1(prev_xk.first, prev_xk.second) * a)
+		(prev_xk.first - dfx0(prev_xk.first, prev_xk.second) * a),
+		(prev_xk.second - dfx1(prev_xk.first, prev_xk.second) * a)
 	);
 
-	while (fabs(fun(xk.first, xk.second) - fun(prev_xk.first, prev_xk.second)) > eps) {
+	while (fabs(f(xk.first, xk.second) - f(prev_xk.first, prev_xk.second)) > eps) {
 		prev_xk = xk;
 		xk = make_pair(
-			(prev_xk.first - fun1x0(prev_xk.first, prev_xk.second) * a),
-			(prev_xk.second - fun1x1(prev_xk.first, prev_xk.second) * a)
+			(prev_xk.first - dfx0(prev_xk.first, prev_xk.second) * a),
+			(prev_xk.second - dfx1(prev_xk.first, prev_xk.second) * a)
 		);
 
-		if (fun(xk.first, xk.second) > fun(prev_xk.first, prev_xk.second)) {
+		if (f(xk.first, xk.second) > f(prev_xk.first, prev_xk.second)) {
 			a *= 0.5; 
 		}
-		++iteration;
+		++iter;
 	}
 
-	cout << "f(" << xk.first << ", " << xk.second << ") = " << fun(xk.first, xk.second) << '\n';
-	cout << "Iteration: " << iteration << endl;
+	cout << "f(" << xk.first << ", " << xk.second << ") = " << f(xk.first, xk.second) << '\n';
+	cout << "Iteration: " << iter << endl;
 }

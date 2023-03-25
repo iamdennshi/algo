@@ -1,27 +1,28 @@
 #include <iostream>
+using namespace std;
 
-void goldenSectionSearch(double (*fun)(double), double a, double b, double eps) {
-    using namespace std;
-    
-    int iteration = 1;
+void golden_section_search(double (*f)(double), double a, double b, double eps) {
+    int iter = 1;
     double t = (sqrt(5) + 1) / 2;
-    double xk1 = b - (b - a) / t;
-    double xk2 = a + (b - a) / t;
+    pair<double, double> x = make_pair(
+        b - (b - a) / t,
+        a + (b - a) / t
+    );
 
     while (fabs(b - a) > eps) {
-        if (fun(xk1) < fun(xk2)) {
-            b = xk2;
+        if (f(x.first) < f(x.second)) {
+            b = x.second;
         } 
         else {
-            a = xk1;
+            a = x.first;
 
         }
 
-        xk1 = b - (b - a) / t;
-        xk2 = a + (b - a) / t;
-        iteration++;
+        x.first = b - (b - a) / t;
+        x.second = a + (b - a) / t;
+        iter++;
     }
-    double x = (a + b) / 2;
-    cout << "f(" << x << ") = " << fun(x) << endl;
-    cout << "Iteration: " << iteration << endl << endl;
+    double result = (a + b) / 2;
+    cout << "f(" << result << ") = " << f(result) << endl;
+    cout << "Iteration: " << iter << endl;
 }
