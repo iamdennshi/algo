@@ -15,8 +15,10 @@
 
 ## Методы нахождения минимума от двух переменных
 ### Методы прямого поиска (нулевого порядка)
-* Метод Хука-Дживса - [`patternSearch.cpp`](./algo/patternSearch.cpp)
+* Метод Хука-Дживса - [`pattern-search.cpp`](./algo/pattern-search.cpp)
 
 ### Методы первого порядка
 * Градиентный метод с постоянным шагом - [`gradient-fixed-step.cpp`](./algo/gradient-fixed-step.cpp)
 
+## Методы линейного программирования
+* Симплекс метод - [`simplex.cpp`](./algo/simplex.cpp)

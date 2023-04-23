@@ -1,5 +1,40 @@
 ﻿#include "main.h"
+#include <array>
 using namespace std;
+
+#pragma region Функция от одной переменной, приминима только к соответсвующим методам 
+// Фнукция, минимум который нужно найти
+double f(double x) {
+	return (-1 * x * x * x + 3 * (1 + x) * (std::log1p(x) - 1));
+}
+// Первая производная
+double dfx(double x) {
+	return -3 * x * x + 3 * std::log1p(x);
+}
+// Вторая производная
+double df_x(double x) {
+	return (-6 * x * (x + 1) + 3) / (x + 1);
+}
+#pragma endregion
+
+#pragma region Функция от двух переменных
+// Фнукция, минимум который нужно найти
+double f(double x0, double x1) {
+	//return x0 * x0 + std::pow(1.61, x1 * x1 + x0 * x0) + 4 * x0 + 3 * x1;
+	return x0 * x0 + 3 * x1 * x1 + std::cos(x0 + x1);
+}
+// Первая производная по x0
+double dfx0(double x0, double x1) {
+	//return 2 * x0 + 2 * x0 * std::pow(1.61, x0 * x0 + x1 * x1) + 4;
+	return 2 * x0 - sin(x0 + x1);
+}
+// Первая производная по x1
+double dfx1(double x0, double x1) {
+	//return 2 * x0 * std::pow(1.61, x1 * x1 + x0 * x0) + 2 * x1 + 3;
+	return 6 * x1 - sin(x0 + x1);
+}
+#pragma endregion
+
 
 int main() {
 	setlocale(LC_ALL, "Russian");
@@ -51,6 +86,22 @@ int main() {
 	//	Результат:
 	//	f(0, 0) = 1
 	//	Iteration: 21
-	#pragma endregion
+#pragma endregion
+
+	cout << "Симплекс Метод" << endl;
+
+
+	std::array<Limit, 3> limits  = {
+		Limit(5, -2, t_Ratio::LESS, 4),
+		Limit(1, -2, t_Ratio::GRATE, -4),
+		Limit(1, 1, t_Ratio::GRATE, 4)
+	};
+
+
+
+	simplex(1, 2, limits);
+	//	Результат:
+	//	f(0, 0) = 1
+
 	return 0;
 }
