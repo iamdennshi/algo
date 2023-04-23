@@ -3,7 +3,7 @@
 
 
 #include <iostream>
-
+#include <array>
 #pragma region Функция от одной переменной, приминима только к соответсвующим методам 
 // Фнукция, минимум который нужно найти
 double f(double x);
@@ -38,7 +38,7 @@ void gradient_min_step(double (*f)(double, double), double (*dfx0)(double, doubl
 void pattern_search(double (*f)(double, double), std::pair<double, double> x0, double eps);
 #pragma endregion
 
-#pragma region Линейное программирование
+#pragma region Методы линейного программирования
 
 // Вид соотношения
 enum t_Ratio {
@@ -50,16 +50,20 @@ enum t_Ratio {
 // Ограничение для симплекс метода
 class Limit {
 public: 
-	int x1, x2;
+	// FIME: Костыль, неизвестных в ограничений может быть больше
+	std::array<int, 6> x = { 0 };
 	t_Ratio ratio;
 	int b;
 
-	Limit(int x1, int x2, t_Ratio ratio, int b) : x1(x1), x2(x2), ratio(ratio), b(b) {}
+	Limit(int x1, int x2, t_Ratio ratio, int b) : ratio(ratio), b(b) {
+		x[0] = x1;
+		x[1] = x2;
+	}
 
 	std::string show_limit();
 };
 
-void simplex(double x1, double x2, std::array<Limit, 3> limits);
+void simplex(std::array<int, 2> x, std::array<Limit, 3> limits);
 #pragma endregion
 
 #endif // !MAIN_H

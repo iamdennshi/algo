@@ -86,10 +86,12 @@ int main() {
 	//	Результат:
 	//	f(0, 0) = 1
 	//	Iteration: 21
-#pragma endregion
+	#pragma endregion
+
+
+
 
 	cout << "Симплекс Метод" << endl;
-
 
 	std::array<Limit, 3> limits  = {
 		Limit(5, -2, t_Ratio::LESS, 4),
@@ -99,9 +101,10 @@ int main() {
 
 
 
-	simplex(1, 2, limits);
+	simplex({ 1, 2}, limits);
 	//	Результат:
 	//	f(0, 0) = 1
+
 
 	return 0;
 }

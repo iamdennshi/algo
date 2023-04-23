@@ -48,7 +48,6 @@ void pattern_search(double (*f)(double, double), std::pair<double, double> x0, d
 		}
 	} while (a > eps);
 
-
 	cout << "f(" << mxk.first << ", " << mxk.second << ") = " << mf << '\n';
 	cout << "Iteration: " << iter << endl;
 
