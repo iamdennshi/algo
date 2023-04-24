@@ -21,4 +21,4 @@
 * Градиентный метод с постоянным шагом - [`gradient-fixed-step.cpp`](./algo/gradient-fixed-step.cpp)
 
 ## Методы линейного программирования
-* Симплекс метод - [`simplex.cpp`](./algo/simplex.cpp)
+* Симплекс метод. Нахождение максимума функций ограниченной системой - [`simplex.cpp`](./algo/simplex.cpp)
