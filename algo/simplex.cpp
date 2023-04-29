@@ -64,10 +64,11 @@ void simplex(std::array<int, 2> x, std::array<Limit, 3> limits) {
 	// максимально свободный индекс в ограничениях 
 	// Иниц-ия 2, потому что первоначально 2 переменных в ограничениях
 	int max_x_index = 2; 
+
 	int fake_x_index = 0; // индекс искусственной переменной
 	vector<int> table_x; // Индексы базисных переменных для таблицы
 	int iteration = 0; // кол-во итераций
-	bool isDEBUG = false; // включить промежуточные вычисление
+	bool isDEBUG = true; // включить промежуточные вычисление
 
 	if (isDEBUG) {
 		std::cout << "Целевая функция: \n";
@@ -204,7 +205,7 @@ void simplex(std::array<int, 2> x, std::array<Limit, 3> limits) {
 			// Заменяем базисную переменную на новую
 			table_x[min_row_index - 1] = min_column_index - 1;
 
-			// Второе заполнение таблицы
+			// Следующее заполнение таблицы
 			// Заполнение тело
 			for (int i = 1; i < table_new.size(); i++) {
 				for (int j = 0; j < table_new[0].size(); j++) {
@@ -227,7 +228,6 @@ void simplex(std::array<int, 2> x, std::array<Limit, 3> limits) {
 			}
 
 			// Вычисление оценок начиная c table_new[0][1]
-			//bool isNegative = false; // Для проверки на отрицательность оценок
 			for (int i = 1; i < table_new[0].size(); i++) {
 				table_new[0][i] = 0;
 				for (int j = 0; j < table_x.size(); j++) {

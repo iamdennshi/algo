@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <array>
+
+using namespace std;
+
 #pragma region Функция от одной переменной, приминима только к соответсвующим методам 
 // Фнукция, минимум который нужно найти
 double f(double x);
@@ -39,7 +42,6 @@ void pattern_search(double (*f)(double, double), std::pair<double, double> x0, d
 #pragma endregion
 
 #pragma region Методы линейного программирования
-
 // Вид соотношения
 enum t_Ratio {
 	EQUAL, // =
@@ -62,8 +64,15 @@ public:
 
 	std::string show_limit();
 };
-
+// x - коэффициенты целевой функции
+// limits - 3 ограничения
 void simplex(std::array<int, 2> x, std::array<Limit, 3> limits);
+
+// costs - матрица стоимости 4 на 4
+// a - объемы производства
+// b - объемы потребления
+void potential_method(array<array<int, 4>, 4> costs, array<int, 4> a, array<int, 4> b);
+
 #pragma endregion
 
 #endif // !MAIN_H

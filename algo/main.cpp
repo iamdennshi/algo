@@ -89,19 +89,21 @@ int main() {
 	#pragma endregion
 
 	#pragma region Примеры использования методов линейного программирования
-	cout << "Симплекс Метод. Нахождение максимума функций ограниченной системой" << endl;
-
+	//cout << "Симплекс Метод. Нахождение максимума функций ограниченной системой" << endl;
 	// Система ограничений для симплекс метода
-	std::array<Limit, 3> limits  = {
-		Limit(5, -2, t_Ratio::LESS, 4),
-		Limit(1, -2, t_Ratio::GRATE, -4),
-		Limit(1, 1, t_Ratio::GRATE, 4)
-	};
+	//std::array<Limit, 3> limits  = {
+	//	Limit(5, -2, t_Ratio::LESS, 4),
+	//	Limit(1, -2, t_Ratio::GRATE, -4),
+	//	Limit(1, 1, t_Ratio::GRATE, 4)
+	//};
 
-	simplex({ 1, 2}, limits);
+	//simplex({ 1, 2}, limits);
 	//	Результат:
 	//	Xmax = {2, 3, 0, 0, 1, 0}
 	//	fmax = 8
+
+	cout << "Транспортная задача. Метод потенциалов" << endl;
+	potential_method({ { {4,5,5,7}, {8,7,5,4}, {9,6,4,5}, {3,2,9,3} } }, { 100, 120,150,130 }, { 140,130,90,140 });
 	#pragma endregion
 
 	return 0;
