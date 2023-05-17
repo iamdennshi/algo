@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <string>
 #include <numeric>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,12 +40,38 @@ void print_matrix(string name, Matrix& body, Amount a, Amount b) {
 	cout << "\n\n";
 }
 
-Matrix& get_minimal_costs(Matrix& body, Amount a, Amount b) {
+Matrix& init_first_plan(Matrix body, Amount a, Amount b) {
 	static Matrix plan = {0};
 	
+	for (int i = 0; i < body.size(); i++) {
+		while (a[i] != 0) {
+			auto smallest = std::min_element(body[i].begin(), body[i].end());
+			int smallest_index = std::distance(body[i].begin(), smallest);
+			
+			if (body[i][smallest_index] != std::numeric_limits<int>::max()) {
+				plan[i][smallest_index] = std::min(a[i], b[smallest_index]);
 
+				a[i] -= plan[i][smallest_index];
+				b[smallest_index] -= plan[i][smallest_index];
+
+				body[i][smallest_index] = std::numeric_limits<int>::max();
+			}
+		}
+	}
 
 	return plan;
+}
+
+int get_plan_cost(Matrix& plan, Matrix& costs) {
+	int cost = 0;
+	for (int i = 0; i < plan.size(); i++) {
+		for (int j = 0; j < plan.size(); j++) {
+			if (plan[i][j] > 0) {
+				cost += plan[i][j] * costs[i][j];
+			}
+		}
+	}
+	return cost;
 }
 
 void potential_method(Matrix costs, Amount a, Amount b) {
@@ -61,5 +88,8 @@ void potential_method(Matrix costs, Amount a, Amount b) {
 	}
 
 	// построение опорного плана X0 (по методу наименьшей стоимости)
-	Matrix plan = get_minimal_costs(costs, a, b);
+	Matrix plan = init_first_plan(costs, a, b);
+	cout << "\nОпорный план со стоимостью " << get_plan_cost(plan, costs) << '\n';
+	print_matrix("X0", plan, a, b);
+
 }
