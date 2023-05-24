@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <array>
 #include <iomanip>
 #include <string>
@@ -74,7 +74,7 @@ int get_plan_cost(Matrix& plan, Matrix& costs) {
 	return cost;
 }
 
-// получение кол-во базисных переменных
+// РїРѕР»СѓС‡РµРЅРёРµ РєРѕР»-РІРѕ Р±Р°Р·РёСЃРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С…
 int get_number_basis_var(Matrix& plan) {
 	int count{ 0 };
 	for (auto i : plan) {
@@ -87,39 +87,39 @@ int get_number_basis_var(Matrix& plan) {
 }
 
 void potential_method(Matrix costs, Amount a, Amount b) {
-	cout << "Матрица стоимости:\n";
+	cout << "РњР°С‚СЂРёС†Р° СЃС‚РѕРёРјРѕСЃС‚Рё:\n";
 	print_matrix("C", costs, a, b);
 	
-	// проверка условия баланса ai = bi
+	// РїСЂРѕРІРµСЂРєР° СѓСЃР»РѕРІРёСЏ Р±Р°Р»Р°РЅСЃР° ai = bi
 	if (accumulate(a.begin(), a.end(), 0) == accumulate(b.begin(), b.end(), 0)) {
-		cout << "Условие баланса выполняется\n";
+		cout << "РЈСЃР»РѕРІРёРµ Р±Р°Р»Р°РЅСЃР° РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ\n";
 	}
 	else {
-		// FIXME: при не выполнении нужно добавить фиктивного производителя или потребителя
-		cout << "Условие баланса НЕ выполняется\n";
+		// FIXME: РїСЂРё РЅРµ РІС‹РїРѕР»РЅРµРЅРёРё РЅСѓР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ С„РёРєС‚РёРІРЅРѕРіРѕ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЏ РёР»Рё РїРѕС‚СЂРµР±РёС‚РµР»СЏ
+		cout << "РЈСЃР»РѕРІРёРµ Р±Р°Р»Р°РЅСЃР° РќР• РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ\n";
 	}
 
-	// построение опорного плана X0 (по методу наименьшей стоимости)
+	// РїРѕСЃС‚СЂРѕРµРЅРёРµ РѕРїРѕСЂРЅРѕРіРѕ РїР»Р°РЅР° X0 (РїРѕ РјРµС‚РѕРґСѓ РЅР°РёРјРµРЅСЊС€РµР№ СЃС‚РѕРёРјРѕСЃС‚Рё)
 	Matrix plan = init_first_plan(costs, a, b);
-	cout << "\nОпорный план со стоимостью " << get_plan_cost(plan, costs) << '\n';
+	cout << "\nРћРїРѕСЂРЅС‹Р№ РїР»Р°РЅ СЃРѕ СЃС‚РѕРёРјРѕСЃС‚СЊСЋ " << get_plan_cost(plan, costs) << '\n';
 	print_matrix("X0", plan, a, b);
 
-	// проверка, на то покрывает ли план все значения
-	int number_basis_var = get_number_basis_var(plan); // кол-во базисных переменных в плане
+	// РїСЂРѕРІРµСЂРєР°, РЅР° С‚Рѕ РїРѕРєСЂС‹РІР°РµС‚ Р»Рё РїР»Р°РЅ РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ
+	int number_basis_var = get_number_basis_var(plan); // РєРѕР»-РІРѕ Р±Р°Р·РёСЃРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С… РІ РїР»Р°РЅРµ
 	pair<int, int> point;
 	Amount u{0}, v{0};
 	bool isFound = false;
 	int iter = 0;
 
-	cout << "Кол-во базисных переменных: " << number_basis_var << '\n';
-	cout << "Кол-во потенциалов u, v: " << u.size() + v.size() - 1 << '\n' << '\n';
+	cout << "РљРѕР»-РІРѕ Р±Р°Р·РёСЃРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С…: " << number_basis_var << '\n';
+	cout << "РљРѕР»-РІРѕ РїРѕС‚РµРЅС†РёР°Р»РѕРІ u, v: " << u.size() + v.size() - 1 << '\n' << '\n';
 
-	// нахождение координаты первой базисной точки
+	// РЅР°С…РѕР¶РґРµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚С‹ РїРµСЂРІРѕР№ Р±Р°Р·РёСЃРЅРѕР№ С‚РѕС‡РєРё
 	for (int i = 0; i < plan.size(); i++) {
 		for (int j = 0; j < plan.size(); j++) {
 			if (plan[i][j] > 0) {
 				point = make_pair(i, j);
-				// при u0 = 0
+				// РїСЂРё u0 = 0
 				v[j] = costs[i][j] + u[i];
 				goto end;
 			}
@@ -127,10 +127,10 @@ void potential_method(Matrix costs, Amount a, Amount b) {
 	}
 	end:
 
-	// проверяем обход плана и находим u,v
+	// РїСЂРѕРІРµСЂСЏРµРј РѕР±С…РѕРґ РїР»Р°РЅР° Рё РЅР°С…РѕРґРёРј u,v
 	for (int i = 0; i < number_basis_var - 1; i++) {
 		isFound = false;
-		// поиск по горизонтали
+		// РїРѕРёСЃРє РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё
 		for (int x = point.second + 1; x < plan.size(); x++) {
 			if (plan[point.first][x] > 0) {
 				isFound = true;
@@ -140,7 +140,7 @@ void potential_method(Matrix costs, Amount a, Amount b) {
 			}
 		}
 		if (!isFound) {
-			// поиск по вертикали
+			// РїРѕРёСЃРє РїРѕ РІРµСЂС‚РёРєР°Р»Рё
 			for (int y = 0; y < plan.size(); y++) {
 				if (plan[y][point.second] > 0 && y != point.first) {
 					point.first = y;
@@ -151,18 +151,18 @@ void potential_method(Matrix costs, Amount a, Amount b) {
 				}
 			}
 			if (!isFound) {
-				// FIXME: Добавляется фиктивная поставка в план
-				cout << "План вырожденный" << endl;
+				// FIXME: Р”РѕР±Р°РІР»СЏРµС‚СЃСЏ С„РёРєС‚РёРІРЅР°СЏ РїРѕСЃС‚Р°РІРєР° РІ РїР»Р°РЅ
+				cout << "РџР»Р°РЅ РІС‹СЂРѕР¶РґРµРЅРЅС‹Р№" << endl;
 				break;
 			}
 		}
 	}
 
-	// план невырожденный, находим матрицу оценок
+	// РїР»Р°РЅ РЅРµРІС‹СЂРѕР¶РґРµРЅРЅС‹Р№, РЅР°С…РѕРґРёРј РјР°С‚СЂРёС†Сѓ РѕС†РµРЅРѕРє
 	Matrix c{ 0 };
-	bool isNegative = false; // есть ли отрицательные оценки
+	bool isNegative = false; // РµСЃС‚СЊ Р»Рё РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рµ РѕС†РµРЅРєРё
 	if (isFound) {
-		cout << "План невырожденный. Матрица оценок для X" << iter << ": " << endl;
+		cout << "РџР»Р°РЅ РЅРµРІС‹СЂРѕР¶РґРµРЅРЅС‹Р№. РњР°С‚СЂРёС†Р° РѕС†РµРЅРѕРє РґР»СЏ X" << iter << ": " << endl;
 		for (int i = 0; i < c.size(); i++)
 		{
 			for (int j = 0; j < c.size(); j++) {
@@ -178,17 +178,17 @@ void potential_method(Matrix costs, Amount a, Amount b) {
 		}
 
 	}
-	// FIXME: вырожденный план
+	// FIXME: РІС‹СЂРѕР¶РґРµРЅРЅС‹Р№ РїР»Р°РЅ
 	else {
 
 	}
 
-	print_matrix("С1", c);
+	print_matrix("РЎ1", c);
 	if (isNegative) {
-		cout << "Оценки отрицательные! План можно улучшить" << endl;
+		cout << "РћС†РµРЅРєРё РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рµ! РџР»Р°РЅ РјРѕР¶РЅРѕ СѓР»СѓС‡С€РёС‚СЊ" << endl;
 	}
 	else {
-		cout << "Оценки не отрицательные! План X" << iter << " оптимальный" << " F(X" << iter << ") = " << get_plan_cost(plan, costs) << endl;
+		cout << "РћС†РµРЅРєРё РЅРµ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рµ! РџР»Р°РЅ X" << iter << " РѕРїС‚РёРјР°Р»СЊРЅС‹Р№" << " F(X" << iter << ") = " << get_plan_cost(plan, costs) << endl;
 	}
 
 
